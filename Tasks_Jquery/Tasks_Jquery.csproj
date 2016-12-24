@@ -95,6 +95,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccountsForEach.aspx" />
+    <Content Include="Click_Event_Binding.aspx" />
+    <Content Include="ControlFlowBinding.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -125,6 +128,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountsForEach.aspx.cs">
+      <DependentUpon>AccountsForEach.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccountsForEach.aspx.designer.cs">
+      <DependentUpon>AccountsForEach.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Click_Event_Binding.aspx.cs">
+      <DependentUpon>Click_Event_Binding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Click_Event_Binding.aspx.designer.cs">
+      <DependentUpon>Click_Event_Binding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ControlFlowBinding.aspx.cs">
+      <DependentUpon>ControlFlowBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlFlowBinding.aspx.designer.cs">
+      <DependentUpon>ControlFlowBinding.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
