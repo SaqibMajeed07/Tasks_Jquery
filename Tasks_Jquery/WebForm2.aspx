@@ -9,66 +9,102 @@
     <script src="Scripts/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-    <form id="form1" runat="server">
-   <table>
+  <div>
+      <h2>
+          List Of Students
+      </h2>
+      <table>
+          <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Student Address</th>
+          </tr>
+          <tbody data-bind="foreach: Students"></tbody>
+          <tr>
+              <td><span data-bind="text: StudentID"></span></td>
+              <td><span data-bind="text: StudentName"/></td>
+              <td> <span data-bind="text: StudentAddress" /></td>
+              <td><button type="submit" data-bind="click: DeleteStudent"> Delete</button></td>
+          </tr>
+      </table>
+      <hr />
+  </div>
+    <div>
+        <h2>Insert New Student</h2>
+        <table>
             <tr>
-                <td>
-                    <!--Bind the TextBoxes in the Table to the observable properties defined into the ViewModel -->
-                    <table id="tbldml">
-                        <tr>
-                            <td>StudentNo</td>
-                            <td>
-                                <input type="text" id="txteno" data-bind="value: $root.CustNo" disabled="disabled" /></td>
-                        </tr>
-                        <tr>
-                            <td>Student Name</td>
-                            <td>
-                                <input type="text" id="txtename" data-bind="value: $root.CustName" /></td>
-                        </tr>
-                        <tr>
-                            <td>Student Address</td>
-                            <td>
-                                <input type="text" id="txtsal" data-bind="value: $root.Salary" /></td>
-                        </tr>
-                        
-                        <tr>
-                            <!--The click binding has the JavaScirpt methods passed to it-->
-                            <td>
-                                <button data-bind="click :$root.save">Save</button></td>
-                            <td>
-                                <button data-bind="click: $root.update">Update</button></td>
-                        </tr>
-                    </table>
-                                 
-                    
-                    
-                    <div class="FixedContainer">
-                         <table data-bind="visible:  Customers().length>0" style="border: double">
-                            <thead>
-                                <tr>
-                                    <td>Student ID</td>
-                                    <td>Student Name</td>
-                                    <td>Student Address</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <!--Iterate through an observableArray using foreach-->
-                            <tbody data-bind="foreach: Customers">
-                                <tr style="border: solid" data-bind="click: $root.getselectedcustomer" id="updtr">
-                                    <td><span data-bind="text:  StudentId"></span></td>
-                                    <td><span data-bind="text:  StudentName"></span></td>
-                                    <td><span data-bind="text: Salary"></span></td>
-                                    <td><span data-bind="text: DeptName"></span></td>                  
-                                    <td>
-                                        <button data-bind="click: $root.deleterec">Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-    </form>
+                <td> Student ID:</td>
+                <td> <input type="text" data-bind="value: StudentID"/></td>
+                <td> <span data-bind="text: StudentID" ></span></td>
+            </tr>
+            <tr>
+                <td>Student Name:</td>
+                <td> <input type="text" data-bind="value: StudentName" /> </td>
+                <td><span data-bind="text: StudentName" ></span></td>
+            </tr>
+            <tr>
+                <td> Student Address</td>
+                <td> <input type="text" data-bind="value: StudentAddress"/></td>
+                <td> <span data-bind="text: StudentAddress"></span></td>
+            </tr>
+            <tr>
+            <td> <button type="submit" data-bind="click: SaveStudent" > Insert Student</button></td>
+                </tr>
+        </table>
+    </div>
     <script>
    
-       
+        var Student = function (data) {
+            this.StudentID = ko.observable(data.StudentID);
+            this.StudentName = ko.observable(data.StudentName);
+            this.StudentAddress = ko.observable(data.StudentAddress);
+        }
+        function StudentViewModel()
+        {
+            var self = this;
+            self.StudentID = ko.observable();
+            self.StudentName = ko.observable();
+            self.StudentAddress = ko.observable();
+            self.Students = ko.observableArray([]);
+
+            self.SaveStudent = function(){
+                $.ajax({
+                    type: "POST",
+                    url: "Webform2.aspx/SaveStudent",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        alert(result.d);
+                    },
+                });
+
+                self.DeleteStudent = function (student) {
+                    $.ajax({
+                        type: "POST",
+                        url: "Webform2.aspx/DeleteStudent",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            alert(result.d);
+                            self.Students.remove(student)
+                        },
+                    });
+
+                    self.FetchStudents = function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "Webform2.aspx/showstudents",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                alert(result.d);
+                                self.Students.remove(student)
+                            },
+                        });
+                    }
+                }
+            }
+
+        }
+        ko.applyBindings(new StudentViewModel());
+        
    
     </script>
 </body>

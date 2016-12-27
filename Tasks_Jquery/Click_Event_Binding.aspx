@@ -15,8 +15,8 @@
             <script>
         $(document).ready(function () {
             $("#newbtn").click(function () {
-                var myaccount = new Accounts($("#newid").val(), $("#newname").val(), $("#newbalance").val());
-                Accounts.push(myaccount);
+                var myaccount = ko.dataFor( new Accounts($("#newid").val(), $("#newname").val(), $("#newbalance").val()));
+                accountviewModel.Accounts.push(myaccount);
             });
         });
     </script>
@@ -39,6 +39,7 @@
             <td data-bind="text:Name"></td>
             <td data-bind="text: Balance"></td>
             <td>   <button data-bind="click:selectaccount">Select</button></td>
+            <td> <button data-bind="click:deleteaccount"> Delete</button></td>
         </tr>
             
             </tbody>
@@ -51,7 +52,7 @@
     ID:      <input type="text" id="newid" /> <br />
     Name:    <input type="text" id="newname" /><br />
     Balance: <input type="text" id="newbalance" /><br />
-    <button data-bind="click:Addaccount" > Enter New Account</button>
+    <button id="newbtn" > Enter New Account</button>
 
     <script>
     var Accounts = function(id, name, balance)
@@ -75,11 +76,12 @@
             current.selectedaccount(account);
             return alert(account.Name);
         }
-
-        this.Addaccount = function () {
-            var myaccount = new Accounts($("#newid").val(), $("#newname").val(), $("#newbalance").val());
-            current.Accounts.push(myaccount);
+        this.deleteaccount = function (selectedaccount) {
+            current.Accounts.remove(selectedaccount);
         }
+
+
+
 
     }
     ko.applyBindings(accountviewModel);

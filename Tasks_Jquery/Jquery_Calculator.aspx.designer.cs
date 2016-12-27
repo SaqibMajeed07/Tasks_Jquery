@@ -10,6 +10,6 @@
 namespace Tasks_Jquery {
     
     
-    public partial class WebForm2 {
+    public partial class Jquery_Ca_culator {
     }
 }
