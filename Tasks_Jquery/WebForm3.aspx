@@ -28,7 +28,9 @@
 <body>
     <div>
         <select id="selectedaccount" data-bind="options: accounts, optionsText: 'Name', optionsValue:'Id'"></select> <br />
-       
+       <ul data-bind="foreach: accounts">
+           <li data-bind="text: Name"></li>
+       </ul>
     </div>
   <hr />
     <div>
