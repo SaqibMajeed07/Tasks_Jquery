@@ -24,7 +24,7 @@ namespace Tasks_Jquery
             return data;
         }
         [WebMethod]
-        public static string SaveStudent(Student[] data)
+        public static string Save(Student[] data)
         {
             MyStudentsEntities db = new MyStudentsEntities();
             Student student = new Student();

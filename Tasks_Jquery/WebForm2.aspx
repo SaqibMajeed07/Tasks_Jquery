@@ -70,7 +70,7 @@
             self.SaveStudent = function(){
                 $.ajax({
                     type: "POST",
-                    url: "Webform2.aspx/SaveStudent",
+                    url: "Webform2.aspx/Save",
                     contentType: "application/json; charset=utf-8",
                     success: function (result) {
                         alert(result.d);
