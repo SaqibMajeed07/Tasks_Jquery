@@ -21,7 +21,7 @@
           </tr>
           <tbody data-bind="foreach: Students"></tbody>
           <tr>
-              <td><span data-bind="text: StudentID" /></td>
+              <td><span data-bind="text: StudentID"></span></td>
               <td><span data-bind="text: StudentName"/></td>
               <td> <span data-bind="text: StudentAddress" /></td>
               <td><button type="submit" data-bind="click: DeleteStudent"> Delete</button></td>
@@ -53,15 +53,21 @@
         </table>
     </div>
     <script>
-        var StudentViewModel=  function (data)
+   
+        var Student = function (data) {
+            this.StudentID = ko.observable(data.StudentID);
+            this.StudentName = ko.observable(data.StudentName);
+            this.StudentAddress = ko.observable(data.StudentAddress);
+        }
+        function StudentViewModel()
         {
             var self = this;
             self.StudentID = ko.observable();
             self.StudentName = ko.observable();
             self.StudentAddress = ko.observable();
-            self.Students = ko.observableArray(data);
-          
-            self.SaveStudent = function () {
+            self.Students = ko.observableArray([]);
+
+            self.SaveStudent = function(){
                 $.ajax({
                     type: "POST",
                     url: "Webform2.aspx/SaveStudent",
@@ -70,40 +76,34 @@
                         alert(result.d);
                     },
                 });
-            };
 
-            self.DeleteStudent = function (student) {
-                $.ajax({
-                    type: "POST",
-                    url: "Webform2.aspx/DeleteStudent",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        alert(result.d);
-                        self.Students.remove(student)
-                    },
-                });
-            };
+                self.DeleteStudent = function (student) {
+                    $.ajax({
+                        type: "POST",
+                        url: "Webform2.aspx/DeleteStudent",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            alert(result.d);
+                            self.Students.remove(student)
+                        },
+                    });
 
-            self.FetchStudents = function () {
-                $.ajax({
-                    type: "POST",
-                    url: "Webform2.aspx/showstudents",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        alert(result.d);
-                        self.Students.remove(student)
-                    },
-                });
-            };
+                    self.FetchStudents = function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "Webform2.aspx/showstudents",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                alert(result.d);
+                                self.Students.remove(student)
+                            },
+                        });
+                    }
+                }
+            }
 
         }
-        var viewmodel = new StudentViewModel([
-            { StudentID: 1, StudentName: "Saqib Majeed", StudentAddress: "Multan" },
-            {
-                StudentID: 2, StudentName: "Mehboob Khan", StudentAddress: "Lahore"
-            }
-        ]);
-        ko.applyBindings(viewmodel);
+        ko.applyBindings(new StudentViewModel());
         
    
     </script>
